@@ -19,6 +19,8 @@ require('events').EventEmitter.defaultMaxListeners = 10000
 let topic = process.argv[4];
 let key = "ingest"
 
+let counter = 0;
+let didIndex = 0;
 
 function getEvent(type) {
     let event = data[type];
@@ -26,7 +28,14 @@ function getEvent(type) {
         event.edata.filters.dialcodes = faker.random.arrayElement(data.dialCodes)
     }
     event.mid = "LOAD_TEST_" + process.env.machine_id + "_" + faker.random.uuid()
-    event.context.did = faker.random.arrayElement(deviceList.dids);
+        //event.context.did = faker.random.arrayElement(deviceList.dids);
+    event.context.did = deviceList.dids[didIndex]
+    counter = counter + 1;
+    if (counter >= 100) {
+        console.log("reset")
+        counter = 0;
+        didIndex = didIndex + 1
+    }
     event.context.channel = faker.random.arrayElement(data.channelIds);
     if (event.object) {
         event.object.id = faker.random.arrayElement(data.contentIds);
@@ -84,8 +93,6 @@ function dispatch(message, batch, cb) {
         })();
     }
 }
-
-
 
 function getTraceEvents() {
     var traceEvents = require("./tracerEvents")
