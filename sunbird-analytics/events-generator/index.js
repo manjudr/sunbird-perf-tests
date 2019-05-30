@@ -3,6 +3,7 @@ let data = require('./data');
 let faker = require('faker');
 var async = require("async");
 var deviceList = require('./deviceList')
+var userList = require('./userList')
 let eventsToBeGenerated = process.argv[2];
 let trace = process.argv[3];
 console.log("eventsToBeGenerated" + eventsToBeGenerated)
@@ -21,6 +22,7 @@ let key = "ingest"
 
 let counter = 0;
 let didIndex = 0;
+let userIndex = 0;
 
 function getEvent(type) {
     let event = data[type];
@@ -30,11 +32,13 @@ function getEvent(type) {
     event.mid = "LOAD_TEST_" + process.env.machine_id + "_" + faker.random.uuid()
         //event.context.did = faker.random.arrayElement(deviceList.dids);
     event.context.did = deviceList.dids[didIndex]
+    event.actor.id = userList.userIds[userIndex]
     counter = counter + 1;
-    if (counter >= 100) {
-        console.log("reset")
+    if (counter >= 1000) {
         counter = 0;
         didIndex = didIndex + 1
+        userIndex = userIndex + 1
+        console.log("DeviceId Index" + didIndex)
     }
     event.context.channel = faker.random.arrayElement(data.channelIds);
     if (event.object) {
