@@ -94,7 +94,7 @@ module.exports.SEARCH = {
     "mid": "LP.1556709158182.b8cc03f1-6641-4e39-8cb9-f6fb78cfe194",
     "actor": {
         "id": "org.ekstep.learning.platform",
-        "type": "System"
+        "type": "User"
     },
     "context": {
         "channel": "in.ekstep",
