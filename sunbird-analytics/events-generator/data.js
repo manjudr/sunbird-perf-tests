@@ -19,7 +19,7 @@ module.exports.LOG = {
     },
     "edata": {
         "level": "INFO",
-        "type": "api_access",
+        "type": "test",
         "message": "",
         "params": [{
                 "duration": 10
