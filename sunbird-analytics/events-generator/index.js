@@ -127,7 +127,7 @@ function getTraceEvents() {
 
 setInterval(function() {
     generateBatch(function() {
-        console.log("Events pushed" + Date.now())
+        console.log("Events pushed")
     }, 100)
 })
 
