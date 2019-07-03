@@ -125,12 +125,17 @@ function getTraceEvents() {
 //     }
 // })();
 
+setInterval(function() {
+    generateBatch(function() {
+        console.log("Events pushed")
+    })
+})
 
-(async function loop() {
-    console.log("Generating IMPRESSION:" + impression + " LOG: " + log + " SEARCH: " + search)
-    setInterval(function() {
-        await new Promise(resolve => generateBatch(function() {
-            resolve()
-        }));
-    }, 100)
-})();
+// (async function loop() {
+//     console.log("Generating IMPRESSION:" + impression + " LOG: " + log + " SEARCH: " + search)
+//     setInterval(function() {
+//         await new Promise(resolve => generateBatch(function() {
+//             resolve()
+//         }));
+//     }, 100)
+// })();
