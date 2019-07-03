@@ -105,22 +105,32 @@ function getTraceEvents() {
 }
 
 
+// (async function loop() {
+//     console.log("Generating IMPRESSION:" + impression + " LOG: " + log + " SEARCH: " + search)
+//     for (let i = 1; i <= loops; i++) {
+//         await new Promise(resolve => generateBatch(function() {
+//             resolve()
+//         }));
+//     }
+//     if (trace === "true") {
+//         let isBatch = topic.includes(key) ? true : false
+//         var tracerEvents = getTraceEvents()
+//         dispatch(tracerEvents, isBatch, function(err, res) {
+//             if (!err) {
+//                 console.log("Event pushed")
+//             } else {
+//                 console.error("Error occur due to" + err)
+//             }
+//         })
+//     }
+// })();
+
+
 (async function loop() {
     console.log("Generating IMPRESSION:" + impression + " LOG: " + log + " SEARCH: " + search)
-    for (let i = 1; i <= loops; i++) {
+    setInterval(function() {
         await new Promise(resolve => generateBatch(function() {
             resolve()
         }));
-    }
-    if (trace === "true") {
-        let isBatch = topic.includes(key) ? true : false
-        var tracerEvents = getTraceEvents()
-        dispatch(tracerEvents, isBatch, function(err, res) {
-            if (!err) {
-                console.log("Event pushed")
-            } else {
-                console.error("Error occur due to" + err)
-            }
-        })
-    }
+    }, 100)
 })();
