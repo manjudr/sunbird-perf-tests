@@ -5,6 +5,7 @@ var kafka = require('kafka-node'),
     //client = new kafka.KafkaClient({ kafkaHost: 'localhost:9092' }),
     producer = new Producer(client)
 var count = 0;
+let faker = require('faker');
 var incrementor = 0;
 let topic = process.argv[4];
 let no_of_partitions = process.argv[9];
@@ -19,9 +20,17 @@ client.on('error', function(err) {
 })
 
 var KafkaDispatcher = {
-    dispatchBatch: function(telemetryEvent, cb) {
+    dispatchBatch: function(telemetryEvent, index, cb) {
         this.createPartitions(Number(no_of_partitions))
-        var eventObject = { "id": "loadtest.telemetry", "ver": "3.0", "ets": new Date().getTime(), "events": telemetryEvent, "mid": "56c0c430-748b-11e8-ae77-cd19397ca6b0", "syncts": 1529500243955 }
+            //        var eventObject = { "id": "loadtest.telemetry", "ver": "3.0", "ets": new Date().getTime(), "events": telemetryEvent, "mid": "56c0c430-748b-11e8-ae77-cd19397ca6b0", "syncts": 1529500243955 }
+        var eventObject_with_params = { "id": "loadtest.telemetry", params: { msgid: faker.random.uuid() }, "ver": "3.0", "ets": new Date().getTime(), "events": telemetryEvent, "mid": faker.random.uuid(), "syncts": new Date().getTime() }
+        var eventObject_without_params = { "id": "loadtest.telemetry", params: "", "ver": "3.0", "ets": new Date().getTime(), "events": telemetryEvent, "mid": faker.random.uuid(), "syncts": new Date().getTime() }
+        var eventObject = undefined;
+        if (index === 1) {
+            eventObject = eventObject_without_params;
+        } else {
+            eventObject = eventObject_with_params;
+        }
         payloads = [{
             topic: topic,
             partition: getPartitionNumber()

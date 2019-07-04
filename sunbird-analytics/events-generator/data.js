@@ -10,7 +10,7 @@ module.exports.LOG = {
     "context": {
         "channel": "505c7c48ac6dc1edc9b08f21db5a571d",
         "pdata": {
-            "id": "prod.ntp.learning.platform",
+            "id": "prod.diksha.portal",
             "pid": "search-service",
             "ver": "1.0"
         },
@@ -69,8 +69,8 @@ module.exports.IMPRESSION = {
     "context": {
         "pdata": {
             "ver": "2.1.8",
-            "pid": "sunbird.app",
-            "id": "prod.diksha.app"
+            "pid": "sunbird",
+            "id": "prod.diksha"
         },
         "channel": "01235953109336064029450",
         "env": "home",
@@ -99,7 +99,7 @@ module.exports.SEARCH = {
     "context": {
         "channel": "in.ekstep",
         "pdata": {
-            "id": "staging.sunbird.learning.platform",
+            "id": "prod.diksha.portal,",
             "pid": "search-service",
             "ver": "1.0"
         },
