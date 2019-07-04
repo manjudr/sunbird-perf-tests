@@ -8,6 +8,7 @@ let data = require('./data');
 let faker = require('faker');
 var async = require("async");
 var deviceList = require('./deviceList')
+var userList = require('./userIdList')
 let eventsToBeGenerated = process.argv[2];
 let trace = process.argv[3];
 console.log("eventsToBeGenerated" + eventsToBeGenerated)
@@ -42,12 +43,15 @@ function getEvent(type, pidIndex) {
         event.context.pdata.id = pidMap["2"]
         pdata_app_id_count++;
     }
+    event.actor.id = faker.random.arrayElement(userList.userIds)
     event.mid = "LOAD_TEST_" + process.env.machine_id + "_" + faker.random.uuid()
     event.context.did = faker.random.arrayElement(deviceList.dids);
     event.context.channel = faker.random.arrayElement(data.channelIds);
     if (event.object) {
         event.object.id = faker.random.arrayElement(data.contentIds);
     }
+    console.log("MID:" + event.mid)
+    console.log("pdata.i.d:" + event.context.pdata.id)
     return event;
 }
 
@@ -144,15 +148,15 @@ var random_index = 1;
 var time = setInterval(function() {
     generateBatch(random_index, function() {
         console.log("Events pushed")
-    }, 100)
-})
+    })
+}, 100)
 setTimeout(function() {
     random_index = 2
-}, 1000)
+}, 1000000)
 
-setTimeout(function() {
-    clearInterval(time)
-}, 4000)
+//setTimeout(function() {
+//  clearInterval(time)
+//}, 4000)
 
 
 // (async function loop() {
